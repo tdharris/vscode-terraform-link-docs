@@ -9,7 +9,7 @@ export type LineMatchResult = {
 };
 
 export const moduleLineMatcher: (line: vscode.TextLine) => LineMatchResult | undefined = (line: vscode.TextLine) => {
-	const matchResult = moduleRe.exec(line.text);
+  const matchResult = moduleRe.exec(line.text);
   if (!matchResult) {
     return;
   };
@@ -17,7 +17,7 @@ export const moduleLineMatcher: (line: vscode.TextLine) => LineMatchResult | und
   const { prefix, moduleSource, match } = matchResult.groups || {};
   const prefixLength: number = prefix!.length;
   const matchLength: number = match!.length;
-  
+
   if (!moduleSource.startsWith("git::")) {
     return;
   };
@@ -34,20 +34,22 @@ export const moduleLineMatcher: (line: vscode.TextLine) => LineMatchResult | und
 
 // Module Sources: Generic Git Repository (with revision)
 // https://developer.hashicorp.com/terraform/language/modules/sources#generic-git-repository
-const parseModuleSource: (resourceType: string) => { owner: string, repo: string, module: string, ref: string } | undefined = (moduleSource) => {
-  const re = /^git::((ssh:\/\/)?.*@.*)(:|\/)(?<owner>[\w-]+)\/(?<repo>[\w-]+).git\/\/(?<module>[\w-\/]+)(\?ref=(?<ref>[\w.-]+))?$/;
+const parseModuleSource: (resourceType: string) => {
+  owner: string, repo: string, module: string, ref: string, domain: string
+} | undefined = (moduleSource) => {
+  const re = /^git::((ssh:\/\/)?.*@(?<domain>.*))(:|\/)(?<owner>[\w-]+)\/(?<repo>[\w-]+).git\/\/(?<module>[\w-\/]+)(\?ref=(?<ref>[\w.-]+))?$/;
 
-	const m = re.exec(moduleSource);
+  const m = re.exec(moduleSource);
   if (!m) { return; };
-  
-	const { owner = "", repo = "", module = "", ref = "" } = m.groups || {};
-	return { owner, repo, module, ref };
+
+  const { owner = "", repo = "", module = "", ref = "", domain = "" } = m.groups || {};
+  return { owner, repo, module, ref, domain };
 };
 
 export const getLineMatchResultUri: (lmr: LineMatchResult) => vscode.Uri | undefined =
   ({ moduleSource }) => {
-    const { owner, repo, module, ref } = parseModuleSource(moduleSource) || {};
+    const { owner, repo, module, ref, domain } = parseModuleSource(moduleSource) || {};
     if (!owner || !repo || !module) { return; }
-    const uri = `https://github.com/${owner}/${repo}/tree/${ref ? ref : 'HEAD'}/${module}`;
-		return vscode.Uri.parse(uri);
+    const uri = `https://${domain ? domain : 'github.com'}/${owner}/${repo}/tree/${ref ? ref : 'HEAD'}/${module}`;
+    return vscode.Uri.parse(uri);
   };
