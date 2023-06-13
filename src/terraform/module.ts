@@ -35,7 +35,7 @@ export const moduleLineMatcher: (line: vscode.TextLine) => LineMatchResult | und
 // Module Sources: Generic Git Repository (with revision)
 // https://developer.hashicorp.com/terraform/language/modules/sources#generic-git-repository
 const parseModuleSource: (resourceType: string) => { owner: string, repo: string, module: string, ref: string } | undefined = (moduleSource) => {
-  const re = /^git::.*:(?<owner>[\w-]+)\/(?<repo>[\w-]+).git\/\/(?<module>[\w-\/]+)(\?ref=(?<ref>[\w.-]+))?$/;
+  const re = /^git::((ssh:\/\/)?.*@.*)(:|\/)(?<owner>[\w-]+)\/(?<repo>[\w-]+).git\/\/(?<module>[\w-\/]+)(\?ref=(?<ref>[\w.-]+))?$/;
 
 	const m = re.exec(moduleSource);
   if (!m) { return; };
