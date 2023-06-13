@@ -1,55 +1,17 @@
 import * as vscode from 'vscode';
+import { 
+  moduleLineMatcher,
+  getLineMatchResultUri as getModuleLineMatchResultUri,
+  LineMatchResult as ModuleLineMatchResult
+} from './terraform/module';
 
-const logPrefix = "[terraform-module-links]";
-const moduleRe = /^(?<match>(?<prefix>\s*source\s+=\s+")(?<moduleSource>[^"]+))"/;
+import { 
+  resourceLineMatcher,
+  getLineMatchResultUri as getResourceLineMatchResultUri,
+  LineMatchResult as ResourceLineMatchResult
+} from './terraform/resource';
 
-type LineMatchResult = {
-  range: vscode.Range,
-  moduleSource: string
-};
-
-const moduleLineMatcher: (line: vscode.TextLine) => LineMatchResult | undefined = (line: vscode.TextLine) => {
-	const matchResult = moduleRe.exec(line.text);
-  if (!matchResult) {
-    return;
-  };
-
-  const { prefix, moduleSource, match } = matchResult.groups || {};
-  const prefixLength: number = prefix!.length;
-  const matchLength: number = match!.length;
-  
-  if (!moduleSource.startsWith("git::")) {
-    return;
-  };
-
-  return {
-    range: new vscode.Range(
-      new vscode.Position(line.lineNumber, prefixLength),
-      new vscode.Position(line.lineNumber, matchLength)
-    ),
-    moduleSource
-  };
-};
-
-// Module Sources: Generic Git Repository (with revision)
-// https://developer.hashicorp.com/terraform/language/modules/sources#generic-git-repository
-const parseModuleSource: (resourceType: string) => { owner: string, repo: string, module: string, ref: string } | undefined = (moduleSource) => {
-  const re = /^git::.*:(?<owner>[\w-]+)\/(?<repo>[\w-]+).git\/\/(?<module>[\w-\/]+)(\?ref=(?<ref>[\w.]+))?$/;
-
-	const m = re.exec(moduleSource);
-  if (!m) { return; };
-  
-	const { owner = "", repo = "", module = "", ref = "" } = m.groups || {};
-	return { owner, repo, module, ref };
-};
-
-const getLineMatchResultUri: (lmr: LineMatchResult) => vscode.Uri | undefined =
-  ({ moduleSource }) => {
-    const { owner, repo, module, ref } = parseModuleSource(moduleSource) || {};
-    if (!owner || !repo || !module) { return; }
-    const uri = `https://github.com/${owner}/${repo}/tree/${ref ? ref : 'HEAD'}/${module}`;
-		return vscode.Uri.parse(uri);
-  };
+const logPrefix = "[terraform-doc-links]";
 
 function isNotUndefined<T>(v: T | undefined): v is T {
   return v !== undefined;
@@ -57,22 +19,25 @@ function isNotUndefined<T>(v: T | undefined): v is T {
 
 const linkProvider: vscode.DocumentLinkProvider = {
   provideDocumentLinks(document: vscode.TextDocument, token: vscode.CancellationToken): vscode.ProviderResult<vscode.DocumentLink[]> {
-    const res: Array<LineMatchResult> = [];
-
+    const res: Array<ModuleLineMatchResult | ResourceLineMatchResult> = [];
+  
     for (let ln = 0; ln < document.lineCount; ln++) {
-      const lineMatchResult = moduleLineMatcher(document.lineAt(ln));
+      const line = document.lineAt(ln);
+      const lineMatchResult = moduleLineMatcher(line) || resourceLineMatcher(line);
       if (lineMatchResult) {
-        console.log(logPrefix, "LMR-MODULE", lineMatchResult);
+        console.log(logPrefix, "LMR", lineMatchResult);
         res.push(lineMatchResult);
       }
     }
 
     return res.map(lmr => {
-      const uri = getLineMatchResultUri(lmr);
+      const uri = lmr.type === 'module' ?
+        getModuleLineMatchResultUri(lmr) :
+        getResourceLineMatchResultUri(lmr);
       if (!uri) { return; }
 
       const link = uri.toString();
-      console.log(logPrefix, "Module link", link);
+      console.log(logPrefix, `${lmr.type} link`, link);
       const ln = new vscode.DocumentLink(
         lmr.range, uri
       );

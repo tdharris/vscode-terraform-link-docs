@@ -1,12 +1,12 @@
 {
-  "name": "terraform-module-links",
-  "displayName": "Terraform Module Source Links",
-  "description": "Open the Terraform module documentation from the module source",
+  "name": "terraform-doc-links",
+  "displayName": "Terraform Doc Links",
+  "description": "Open the documentation from Terraform provider data or resources and module sources",
   "version": "0.0.1",
   "publisher": "Tyler Harris",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tdharris/vscode-terraform-module-links.git"
+    "url": "https://github.com/tdharris/vscode-terraform-doc-links.git"
   },
   "engines": {
     "vscode": "^1.78.0"
@@ -21,8 +21,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "terraform-module-links.visitDocumentation",
-        "title": "Open the Terraform module documentation"
+        "command": "terraform-doc-links.visitDocumentation",
+        "title": "Open the Terraform documentation"
       }
     ]
   },

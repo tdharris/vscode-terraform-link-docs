@@ -1,14 +1,36 @@
-# terraform-module-links README
+# terraform-doc-links README
 
-This extension adds terraform module links to your editor when editing Terraform files.
-
-Initially, this only supports module sources using a particular [Generic Git Repository](https://developer.hashicorp.com/terraform/language/modules/sources#generic-git-repository).
+This extension adds links to resources and modules in your editor when editing Terraform files.
 
 ## Features
 
-This extension will add a clickable link to the module source in the editor. Below are generic examples of the supported module sources and the resulting links.
+This extension will add a link to provider resource and data blocks as well as module sources in your Terraform files.
 
-### Generic Git Repository
+### Provider Resources
+
+1. Resource:
+
+    ```hcl
+    resource "resource_type" "name" {}
+    ```
+    ```
+    https://www.terraform.io/docs/providers/provider/r/resource_type
+    ```
+
+2. Data:
+
+    ```hcl
+    data "data_type" "name" {}
+    ```
+    ```
+    https://www.terraform.io/docs/providers/provider/d/resource_type
+    ```
+
+### Modules
+
+Below are generic examples of the supported module sources and the resulting links.
+
+#### Generic Git Repository
 
 Git repositories that are used by prefixing the address with a special `git::` prefix. For more details, see [Generic Git Repository](https://developer.hashicorp.com/terraform/language/modules/sources#generic-git-repository).
 
