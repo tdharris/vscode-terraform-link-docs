@@ -11,7 +11,7 @@ import {
   LineMatchResult as ResourceLineMatchResult
 } from './terraform/resource';
 
-const logPrefix = "[terraform-doc-links]";
+const logPrefix = "[terraform-link-docs]";
 
 function isNotUndefined<T>(v: T | undefined): v is T {
   return v !== undefined;

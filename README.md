@@ -1,4 +1,4 @@
-# terraform-doc-links README
+# terraform-link-docs README
 
 This extension adds links to resources and modules in your editor when editing Terraform files.
 
