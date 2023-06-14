@@ -1,8 +1,8 @@
 {
   "name": "terraform-link-docs",
-  "displayName": "Terraform Doc Links",
-  "description": "Open the documentation from Terraform provider data or resources and module sources",
-  "version": "0.0.1",
+  "displayName": "Terraform Link Docs",
+  "description": "Open documentation for Terraform resources, data sources, providers and modules",
+  "version": "0.0.2",
   "publisher": "TylerHarris",
   "repository": {
     "type": "git",
@@ -14,6 +14,16 @@
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "terraform",
+    "documentation",
+    "terragrunt"
+  ],
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#282828",
+    "theme": "dark"
+  },
   "activationEvents": [
     "onLanguage:terraform"
   ],
