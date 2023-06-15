@@ -1,11 +1,11 @@
 import * as vscode from 'vscode';
-import { 
+import {
   moduleLineMatcher,
   getLineMatchResultUri as getModuleLineMatchResultUri,
   LineMatchResult as ModuleLineMatchResult
 } from './terraform/module';
 
-import { 
+import {
   resourceLineMatcher,
   getLineMatchResultUri as getResourceLineMatchResultUri,
   LineMatchResult as ResourceLineMatchResult
@@ -20,7 +20,7 @@ function isNotUndefined<T>(v: T | undefined): v is T {
 const linkProvider: vscode.DocumentLinkProvider = {
   provideDocumentLinks(document: vscode.TextDocument, token: vscode.CancellationToken): vscode.ProviderResult<vscode.DocumentLink[]> {
     const res: Array<ModuleLineMatchResult | ResourceLineMatchResult> = [];
-  
+
     for (let ln = 0; ln < document.lineCount; ln++) {
       const line = document.lineAt(ln);
       const lineMatchResult = moduleLineMatcher(line) || resourceLineMatcher(line);
