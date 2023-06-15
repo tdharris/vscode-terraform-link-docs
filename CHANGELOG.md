@@ -1,3 +1,7 @@
+## [0.0.3] (2023-06-15)
+
+- Add support for more module source formats
+- Add CHANGELOG
 
 ## [0.0.2] (2023-06-14)
 
