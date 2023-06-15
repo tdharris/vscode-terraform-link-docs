@@ -1,10 +1,12 @@
-# terraform-link-docs README
+# Terraform Link Docs
 
-This extension adds links to resources and modules in your editor when editing Terraform files.
+This extension adds provider links to resources and data blocks as well as module sources in your Terraform files.
+
+## Demo
+
+![Demo](https://raw.githubusercontent.com/tdharris/vscode-terraform-link-docs/master/assets/demo.gif)
 
 ## Features
-
-This extension will add a link to provider resource and data blocks as well as module sources in your Terraform files.
 
 ### Provider Resources
 
@@ -28,7 +30,7 @@ This extension will add a link to provider resource and data blocks as well as m
 
 ### Modules
 
-Below are generic examples of the supported module sources and the resulting links.
+Below are a couple generic examples of module sources and the resulting links. Other sources are supported as well, such as [Terraform Registry](https://www.terraform.io/docs/language/modules/sources.html#official-terraform-registry) and [Local Paths](https://www.terraform.io/docs/language/modules/sources.html#local-paths), etc.
 
 #### Generic Git Repository
 

@@ -2,7 +2,7 @@
   "name": "terraform-link-docs",
   "displayName": "Terraform Link Docs",
   "description": "Open documentation for Terraform resources, data sources, providers and modules",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "TylerHarris",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "documentation",
     "terragrunt"
   ],
-  "icon": "images/icon.png",
+  "icon": "assets/icon.png",
   "galleryBanner": {
     "color": "#282828",
     "theme": "dark"

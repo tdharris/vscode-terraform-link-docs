@@ -44,9 +44,6 @@ const getGenericGitRepositoryUri: (moduleSource: string) => vscode.Uri | undefin
   const { domain, owner, repo, module, ref } = parseGenericGitRepositoryModuleSource(moduleSource) || {};
   if (!owner || !repo) { return; }
   const uri = `https://${domain ? domain : 'github.com'}/${owner}/${repo}/tree/${ref ? ref : 'HEAD'}/${module}`;
-  if (uri == "https://github.com:gruntwork-io/terraform-aws-eks.git//modules/eks-cluster-control-plane/tree/HEAD/") {
-    console.log("hello");
-  }
   return vscode.Uri.parse(uri);
 };
 
