@@ -1,3 +1,8 @@
+## [0.0.5](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.4...v0.0.5) (2023-06-16)
+
+- Update doc with generic module examples
+- Add github workflows to test and publish
+
 ## [0.0.4](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.3...v0.0.4) (2023-06-15)
 
 - Add demo gif
