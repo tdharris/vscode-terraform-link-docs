@@ -10,50 +10,85 @@ This extension adds provider links to resources and data blocks as well as modul
 
 ### Provider Resources
 
-1. Resource:
+Below are generic examples of a resource and data block where appropriate links are added.
 
-    ```hcl
-    resource "resource_type" "name" {}
-    ```
-    ```
-    https://www.terraform.io/docs/providers/provider/r/resource_type
-    ```
-
-2. Data:
-
-    ```hcl
-    data "data_type" "name" {}
-    ```
-    ```
-    https://www.terraform.io/docs/providers/provider/d/resource_type
-    ```
+```hcl
+resource "resource_type" "name" {}
+```
+```hcl
+data "data_type" "name" {}
+```
 
 ### Modules
 
-Below are a couple generic examples of module sources and the resulting links. Other sources are supported as well, such as [Terraform Registry](https://www.terraform.io/docs/language/modules/sources.html#official-terraform-registry) and [Local Paths](https://www.terraform.io/docs/language/modules/sources.html#local-paths), etc.
+Below are generic examples of module sources where appropriate links are added.
 
-#### Generic Git Repository
+#### [Local Paths](https://developer.hashicorp.com/terraform/language/modules/sources#local-paths)
 
-Git repositories that are used by prefixing the address with a special `git::` prefix. For more details, see [Generic Git Repository](https://developer.hashicorp.com/terraform/language/modules/sources#generic-git-repository).
+```hcl
+module "consul" {
+  source = "./consul"
+}
+```
 
-1. Default branch (referenced by `HEAD`):
+#### [Terraform Registry](https://developer.hashicorp.com/terraform/language/modules/sources#terraform-registry)
 
-    ```hcl
-    module "eks_cluster" {
-      source = "git::git@github.com:owner/repo.git//modules/eks-cluster"
-    }
-    ```
-    ```
-    https://github.com/owner/repo/tree/HEAD/modules/eks-cluster
-    ```
+```hcl
+module "consul" {
+  source = "hashicorp/consul/aws"
+  version = "0.1.0"
+}
 
-2. Selecting a Revision:
+module "consul" {
+  source = "app.terraform.io/example-corp/k8s-cluster/azurerm"
+  version = "1.1.0"
+}
 
-    ```hcl
-    module "eks_cluster" {
-      source = "git::git@github.com:owner/repo.git//modules/eks-cluster?ref=v0.0.1"
-    }
-    ```
-    ```
-    https://github.com/owner/repo/tree/v0.0.1/modules/eks-cluster
-    ```
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "5.0.0"
+}
+```
+
+#### [Github](https://developer.hashicorp.com/terraform/language/modules/sources#github)
+
+```hcl
+module "consul" {
+  source = "github.com/hashicorp/example"
+}
+
+module "consul" {
+  source = "git@github.com:hashicorp/example.git"
+}
+```
+
+#### [Generic Git Repository](https://developer.hashicorp.com/terraform/language/modules/sources#generic-git-repository)
+
+```hcl
+module "eks_cluster" {
+  source = "git::git@github.com:owner/repo.git//modules/eks-cluster"
+}
+
+# select a revision
+module "eks_cluster" {
+  source = "git::git@github.com:owner/repo.git//modules/eks-cluster?ref=v0.0.1"
+}
+
+# directly select a commit using its SHA-1 hash
+module "eks_cluster" {
+  source = "git::git@github.com:owner/repo.git//modules/eks-cluster?ref=51d462976d84fdea54b47d80dcabbf680badcdb8"
+}
+
+# "scp-like" address syntax
+module "storage" {
+  source = "git::username@example.com:repo/storage.git"
+}
+```
+
+#### [Bitbucket](https://developer.hashicorp.com/terraform/language/modules/sources#bitbucket)
+
+```hcl
+module "consul" {
+  source = "bitbucket.org/hashicorp/terraform-consul-aws"
+}
+```
