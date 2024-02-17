@@ -7,12 +7,14 @@ on:
     paths-ignore:
       - "**.md"
       - ".github/renovate.json"
+      - ".github/workflows/renovate.yaml"
   pull_request:
     branches:
       - main
     paths-ignore:
       - "**.md"
       - ".github/renovate.json"
+      - ".github/workflows/renovate.yaml"
   workflow_call:
 
 jobs:
