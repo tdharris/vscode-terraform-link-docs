@@ -204,7 +204,7 @@
             "matchDepTypes": [
                 "engines"
             ],
-            "matchPackageNames": [
+            "matchDepNames": [
                 "vscode"
             ],
             "enabled": false
