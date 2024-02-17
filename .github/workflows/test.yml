@@ -11,6 +11,7 @@ on:
       - main
     paths-ignore:
       - "**.md"
+      - ".github/renovate.json"
   workflow_call:
 
 jobs:
