@@ -9,7 +9,7 @@
     "url": "https://github.com/tdharris/vscode-terraform-link-docs.git"
   },
   "engines": {
-    "vscode": "^1.78.0"
+    "vscode": "^1.86.2"
   },
   "categories": [
     "Other"
