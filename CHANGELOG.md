@@ -1,3 +1,7 @@
+## [0.0.6](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.5...v0.0.6) (2024-02-16)
+
+- Add support for terraform registry submodules
+
 ## [0.0.5](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.4...v0.0.5) (2023-06-16)
 
 - Update doc with generic module examples
