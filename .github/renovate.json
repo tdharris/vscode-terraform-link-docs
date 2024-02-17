@@ -195,6 +195,19 @@
                 "major"
             ],
             "groupName": "Typescript major"
+        },
+        {
+            "description": "Do not update engines.vscode",
+            "matchFileNames": [
+                "package.json"
+            ],
+            "matchDepTypes": [
+                "engines"
+            ],
+            "matchPackageNames": [
+                "vscode"
+            ],
+            "enabled": false
         }
     ],
     "platform": "github",
