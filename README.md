@@ -48,6 +48,12 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.0.0"
 }
+
+# Submodules
+module "" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
+  version = "5.33.1"
+}
 ```
 
 #### [Github](https://developer.hashicorp.com/terraform/language/modules/sources#github)

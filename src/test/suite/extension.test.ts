@@ -26,6 +26,10 @@ suite('Extension Test Suite', () => {
 				expected: "https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws"
 			},
 			{
+				input: "terraform-aws-modules/iam/aws//modules/iam-assumable-role",
+				expected: "https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest/submodules/iam-assumable-role"
+			},
+			{
 				input: "github.com/hashicorp/example",
 				expected: "https://github.com/hashicorp/example/tree/HEAD/"
 			},

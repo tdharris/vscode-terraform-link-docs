@@ -69,9 +69,20 @@ const getTerraformRegistryUri: (moduleSource: string) => vscode.Uri | undefined 
   }
 
   // Public Registry
-  if (moduleSource.split("/").length === 3) {
-    // <hostname>/<namespace>/<name>
-    return vscode.Uri.parse(`https://registry.terraform.io/modules/${moduleSource}`);
+  const baseUrl = 'https://registry.terraform.io/modules';
+  const [namespace, name, provider, ...submodules] = moduleSource.split("/").filter(part => part !== '');
+
+  // Submodule
+  // <hostname>/<namespace>/<name>/<provider>/<submodule>
+  if (submodules.length > 0) {
+    const submodulePath = `/submodules/${submodules.join("/").replace("modules/", "")}`;
+    return vscode.Uri.parse(`${baseUrl}/${namespace}/${name}/${provider}/latest${submodulePath}`);
+  }
+
+  // Module
+  // <hostname>/<namespace>/<name>
+  if (namespace && name && provider) {
+    return vscode.Uri.parse(`${baseUrl}/${moduleSource}`);
   }
 
   return;
