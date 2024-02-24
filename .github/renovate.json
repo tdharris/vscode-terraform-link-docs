@@ -212,5 +212,6 @@
     ],
     "platform": "github",
     "onboarding": false,
-    "requireConfig": "ignored"
+    "requireConfig": "ignored",
+    "dependencyDashboard": false
 }
