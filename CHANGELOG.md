@@ -1,3 +1,7 @@
+## [0.0.7](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.6...v0.0.7) (2024-03-01)
+
+- https://github.com/tdharris/vscode-terraform-link-docs/pull/17 - Update module regex to support base repo paths with no module subpath
+
 ## [0.0.6](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.5...v0.0.6) (2024-02-16)
 
 - Add support for terraform registry submodules
