@@ -208,6 +208,19 @@
                 "vscode"
             ],
             "enabled": false
+        },
+        {
+            "description": "Do not update devDependencies.@types/vscode",
+            "matchFileNames": [
+                "package.json"
+            ],
+            "matchDepTypes": [
+                "devDependencies"
+            ],
+            "matchDepNames": [
+                "@types/vscode"
+            ],
+            "enabled": false
         }
     ],
     "platform": "github",
