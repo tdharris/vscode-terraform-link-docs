@@ -90,14 +90,22 @@ suite('Extension Test Suite', () => {
 				expected: "https://github.com/owner/repo/tree/v0.0.1/modules/name"
 			},
 			{
+				input: "git::git@github.com:owner/repo.git//modules/name?ref=51d462976d84fdea54b47d80dcabbf680badcdb8",
+				expected: "https://github.com/owner/repo/tree/51d462976d84fdea54b47d80dcabbf680badcdb8/modules/name"
+			},
+			{
 				input: "git::git@github.com:owner/repo.git//modules/name",
 				expected: "https://github.com/owner/repo/tree/HEAD/modules/name"
+			},
+			{
+				input: "git@github.com:owner/repo.git?ref=v0.0.1",
+				expected: "https://github.com/owner/repo/tree/v0.0.1/"
 			},
 		];
 
 		testCases.forEach(testCase => {
 			// Skip tests that are not supported in GitHub Actions
-			if (testCase.skipCI && process.env.CI) {
+			if (testCase.skipCI) {
 				return;
 			}
 			const result = tfmodule.getLineMatchResultUri({

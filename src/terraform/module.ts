@@ -50,7 +50,7 @@ const getGenericGitRepositoryUri: (moduleSource: string) => vscode.Uri | undefin
 const parseGenericGitRepositoryModuleSource: (resourceType: string) => {
   domain: string, owner: string, repo: string, module: string, ref: string
 } | undefined = (moduleSource) => {
-  const re = /^(git::|git::ssh:\/\/)?((.*@)?)(?<domain>[^:\/]+)(:|\/)(?<owner>[\w-]+)\/(?<repo>[\w-]+)(.git)?(\/\/(?<module>[\w-\/]+)(\?ref=(?<ref>[\w.-]+))?)?$/;
+  const re = /^(git::|git::ssh:\/\/)?((.*@)?)(?<domain>[^:\/]+)(:|\/)(?<owner>[\w-]+)\/(?<repo>[\w-]+)(.git)?(\/\/(?<module>[\w-\/]+))?(\?ref=(?<ref>[\w.-]+))?$/;
 
   const m = re.exec(moduleSource);
   if (!m) { return; };
