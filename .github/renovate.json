@@ -17,8 +17,7 @@
         ":semanticCommits",
         ":updateNotScheduled",
         "workarounds:typesNodeVersioning",
-        ":disablePeerDependencies",
-        "schedule:automergeWeekends"
+        ":disablePeerDependencies"
     ],
     "baseBranches": [
         "main"
