@@ -223,8 +223,5 @@
             "enabled": false
         }
     ],
-    "platform": "github",
-    "onboarding": false,
-    "requireConfig": "ignored",
     "dependencyDashboard": false
 }
