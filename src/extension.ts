@@ -48,6 +48,8 @@ const linkProvider: vscode.DocumentLinkProvider = {
 };
 
 export function activate(context: vscode.ExtensionContext) {
-  const disposeLinkProvider = vscode.languages.registerDocumentLinkProvider('terraform', linkProvider);
-  context.subscriptions.push(disposeLinkProvider);
+  const disposeTerraformLinkProvider = vscode.languages.registerDocumentLinkProvider('terraform', linkProvider);
+  const disposeHclLinkProvider = vscode.languages.registerDocumentLinkProvider('hcl', linkProvider);
+
+  context.subscriptions.push(disposeTerraformLinkProvider, disposeHclLinkProvider);
 }
