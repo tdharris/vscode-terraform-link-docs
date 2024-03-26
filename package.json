@@ -17,7 +17,8 @@
   "keywords": [
     "terraform",
     "documentation",
-    "terragrunt"
+    "terragrunt",
+    "hcl"
   ],
   "icon": "assets/icon.png",
   "galleryBanner": {
@@ -25,7 +26,8 @@
     "theme": "dark"
   },
   "activationEvents": [
-    "onLanguage:terraform"
+    "onLanguage:terraform",
+    "onLanguage:hcl"
   ],
   "main": "./out/extension.js",
   "contributes": {
