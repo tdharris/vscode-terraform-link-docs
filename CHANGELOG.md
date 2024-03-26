@@ -1,10 +1,14 @@
+## [0.0.9](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.8...v0.0.9) (2024-03-26)
+
+- Fix `hcl` support
+
 ## [0.0.8](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.7...v0.0.8) (2024-03-26)
 
-- https://github.com/tdharris/vscode-terraform-link-docs/pull/22 - Add `hcl` support
+- [#22](https://github.com/tdharris/vscode-terraform-link-docs/pull/22) - Add `hcl` support
 
 ## [0.0.7](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.6...v0.0.7) (2024-03-01)
 
-- https://github.com/tdharris/vscode-terraform-link-docs/pull/17 - Update module regex to support base repo paths with no module subpath
+- [#17](https://github.com/tdharris/vscode-terraform-link-docs/pull/17) - Update module regex to support base repo paths with no module subpath
 
 ## [0.0.6](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.5...v0.0.6) (2024-02-16)
 
