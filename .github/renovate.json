@@ -48,16 +48,9 @@
     ],
     "packageRules": [
         {
-            "description": "Prefix devDependencies group names with 'dev'",
-            "matchDepTypes": [
-                "devDependencies"
-            ],
-            "groupNamePrefix": "dev"
-        },
-        {
             "description": "Group major updates together",
             "matchPackagePatterns": [
-                "*"
+                "devDependencies"
             ],
             "matchUpdateTypes": [
                 "major"
@@ -68,12 +61,12 @@
                 "version-update"
             ],
             "commitMessagePrefix": "chore(renovate):",
-            "groupName": "major"
+            "groupName": "dev major"
         },
         {
             "description": "Group minor updates together",
             "matchPackagePatterns": [
-                "*"
+                "devDependencies"
             ],
             "matchUpdateTypes": [
                 "minor"
@@ -82,12 +75,12 @@
                 "minor"
             ],
             "commitMessagePrefix": "chore(renovate):",
-            "groupName": "minor"
+            "groupName": "dev minor"
         },
         {
             "description": "Group patch updates together and automerge if tests pass",
             "matchPackagePatterns": [
-                "*"
+                "devDependencies"
             ],
             "matchUpdateTypes": [
                 "patch"
@@ -96,13 +89,13 @@
                 "patch"
             ],
             "commitMessagePrefix": "chore(renovate):",
-            "groupName": "patch",
+            "groupName": "dev patch",
             "automerge": true
         },
         {
             "description": "Group pin updates together and automerge if tests pass",
             "matchPackagePatterns": [
-                "*"
+                "devDependencies"
             ],
             "matchUpdateTypes": [
                 "pin",
@@ -112,7 +105,7 @@
                 "pin"
             ],
             "commitMessagePrefix": "chore(renovate): pin",
-            "groupName": "pin",
+            "groupName": "dev pin",
             "automerge": true
         },
         {
