@@ -49,8 +49,11 @@
     "packageRules": [
         {
             "description": "Group major updates together",
-            "matchPackagePatterns": [
+            "matchDepTypes": [
                 "devDependencies"
+            ],
+            "matchPackagePatterns": [
+                "*"
             ],
             "matchUpdateTypes": [
                 "major"
@@ -65,8 +68,11 @@
         },
         {
             "description": "Group minor updates together",
-            "matchPackagePatterns": [
+            "matchDepTypes": [
                 "devDependencies"
+            ],
+            "matchPackagePatterns": [
+                "*"
             ],
             "matchUpdateTypes": [
                 "minor"
@@ -79,8 +85,11 @@
         },
         {
             "description": "Group patch updates together and automerge if tests pass",
-            "matchPackagePatterns": [
+            "matchDepTypes": [
                 "devDependencies"
+            ],
+            "matchPackagePatterns": [
+                "*"
             ],
             "matchUpdateTypes": [
                 "patch"
@@ -94,8 +103,11 @@
         },
         {
             "description": "Group pin updates together and automerge if tests pass",
-            "matchPackagePatterns": [
+            "matchDepTypes": [
                 "devDependencies"
+            ],
+            "matchPackagePatterns": [
+                "*"
             ],
             "matchUpdateTypes": [
                 "pin",
