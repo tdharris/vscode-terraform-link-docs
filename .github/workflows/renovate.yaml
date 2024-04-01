@@ -13,6 +13,11 @@ on:
         required: false
         default: "false"
         type: string
+      dryRun:
+        description: "Run Renovate in dry-run mode"
+        required: false
+        default: "false"
+        type: string
   # Run twice a week, on Thursday and Friday at 2:18pm MST (Github Actions cron is UTC)
   # Run at an odd time to avoid overlap with too many other workflows on GitHub Actions
   schedule:
@@ -32,5 +37,6 @@ jobs:
           # Override schedule if set
           RENOVATE_FORCE: ${{ github.event.inputs.overrideSchedule == 'true' && '{''schedule'':null}' || '' }}
           LOG_LEVEL: ${{ inputs.logLevel || 'info' }}
+          RENOVATE_DRY_RUN: ${{ github.event.inputs.dryRun }}
         with:
           token: ${{ secrets.RENOVATE_TOKEN }}

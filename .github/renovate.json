@@ -60,8 +60,8 @@
                 "major",
                 "version-update"
             ],
-            "commitMessagePrefix": "fix(renovate):",
-            "groupName": "major"
+            "commitMessagePrefix": "chore(renovate):",
+            "groupName": "devDependencies major"
         },
         {
             "description": "Group minor updates together",
@@ -74,8 +74,8 @@
             "addLabels": [
                 "minor"
             ],
-            "commitMessagePrefix": "fix(renovate):",
-            "groupName": "minor"
+            "commitMessagePrefix": "chore(renovate):",
+            "groupName": "devDependencies minor"
         },
         {
             "description": "Group patch updates together and automerge if tests pass",
@@ -88,8 +88,8 @@
             "addLabels": [
                 "patch"
             ],
-            "commitMessagePrefix": "fix(renovate):",
-            "groupName": "patch",
+            "commitMessagePrefix": "chore(renovate):",
+            "groupName": "devDependencies patch",
             "automerge": true
         },
         {
@@ -104,8 +104,8 @@
             "addLabels": [
                 "pin"
             ],
-            "commitMessagePrefix": "fix(renovate): pin",
-            "groupName": "pin",
+            "commitMessagePrefix": "chore(renovate): pin",
+            "groupName": "devDependencies pin",
             "automerge": true
         },
         {
@@ -123,7 +123,7 @@
                 "^@types/"
             ],
             "groupName": "minor-types",
-            "commitMessagePrefix": "fix(renovate): @types",
+            "commitMessagePrefix": "chore(renovate): @types",
             "automerge": true
         },
         {
