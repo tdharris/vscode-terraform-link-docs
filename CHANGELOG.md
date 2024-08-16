@@ -1,3 +1,10 @@
+## [0.1.0](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.9...v0.1.0) (2024-08-16)
+
+- Add vscode extension output channel for debugging
+- Update demo.gif with tested examples
+- Add examples main.tf used in demo.gif
+- Update dev dependencies, add .tool-versions
+
 ## [0.0.9](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.8...v0.0.9) (2024-03-26)
 
 - Fix `hcl` support
