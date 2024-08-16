@@ -25,7 +25,7 @@ const linkProvider: vscode.DocumentLinkProvider = {
       const line = document.lineAt(ln);
       const lineMatchResult = moduleLineMatcher(line) || resourceLineMatcher(line);
       if (lineMatchResult) {
-        console.log(logPrefix, "LMR", lineMatchResult);
+        outputChannel.appendLine(`${logPrefix} LMR ${JSON.stringify(lineMatchResult)}`);
         res.push(lineMatchResult);
       }
     }
@@ -37,7 +37,7 @@ const linkProvider: vscode.DocumentLinkProvider = {
       if (!uri) { return; }
 
       const link = uri.toString();
-      console.log(logPrefix, `${lmr.type} link`, link);
+      outputChannel.appendLine(`${logPrefix} ${lmr.type} link ${link}`);
       const ln = new vscode.DocumentLink(
         lmr.range, uri
       );
@@ -47,9 +47,12 @@ const linkProvider: vscode.DocumentLinkProvider = {
   }
 };
 
+const outputChannel = vscode.window.createOutputChannel("Terraform Link Docs");
+
 export function activate(context: vscode.ExtensionContext) {
   const disposeTerraformLinkProvider = vscode.languages.registerDocumentLinkProvider('terraform', linkProvider);
   const disposeHclLinkProvider = vscode.languages.registerDocumentLinkProvider('hcl', linkProvider);
 
   context.subscriptions.push(disposeTerraformLinkProvider, disposeHclLinkProvider);
+  outputChannel.appendLine("Extension activated");
 }
