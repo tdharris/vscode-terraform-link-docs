@@ -101,6 +101,14 @@ suite('Extension Test Suite', () => {
 				input: "git@github.com:owner/repo.git?ref=v0.0.1",
 				expected: "https://github.com/owner/repo/tree/v0.0.1/"
 			},
+			{
+				input: "hashicorp/azurerm",
+				expected: undefined,
+			},
+			{
+				input: "Azure/azapi",
+				expected: undefined,
+			},
 		];
 
 		testCases.forEach(testCase => {

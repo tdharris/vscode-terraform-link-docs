@@ -58,16 +58,3 @@ module "example_git_no_ref" {
 module "example_git_tag" {
   source = "git@github.com:owner/repo.git?ref=v0.0.1"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
