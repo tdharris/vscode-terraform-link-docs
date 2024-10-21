@@ -9,7 +9,7 @@
     "url": "https://github.com/tdharris/vscode-terraform-link-docs.git"
   },
   "engines": {
-    "vscode": "^1.78.0"
+    "vscode": "^1.94.0"
   },
   "categories": [
     "Other"
@@ -18,7 +18,8 @@
     "terraform",
     "documentation",
     "terragrunt",
-    "hcl"
+    "hcl",
+    "devops"
   ],
   "icon": "assets/icon.png",
   "galleryBanner": {
@@ -45,21 +46,22 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "lint": "eslint src",
+    "test": "vscode-test"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.9",
-    "@types/node": "20.16.11",
-    "@types/vscode": "^1.78.0",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
+    "@types/node": "20.x",
+    "@types/vscode": "~1.94",
+    "@typescript-eslint/eslint-plugin": "^8.7.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
     "@vscode/vsce": "^2.31.1",
-    "eslint": "^8.57.1",
-    "glob": "^10.4.5",
+    "eslint": "^9.11.1",
+    "glob": "^11.0.0",
     "mocha": "^10.7.3",
-    "typescript": "^5.5.4"
+    "typescript": "^5.6.2"
   }
 }
