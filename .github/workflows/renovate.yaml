@@ -18,10 +18,10 @@ on:
         required: false
         default: "false"
         type: string
-  # Run twice a week, on Thursday and Friday at 2:18pm MST (Github Actions cron is UTC)
+  # Run monthly on the first Thursday and Friday at 2:18pm MST (Github Actions cron is UTC)
   # Run at an odd time to avoid overlap with too many other workflows on GitHub Actions
   schedule:
-    - cron: "18 21 * * 4,5"
+    - cron: "18 21 1-7 * 4,5"
 concurrency: renovate
 jobs:
   renovate:
