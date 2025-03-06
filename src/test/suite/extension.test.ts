@@ -98,6 +98,14 @@ suite('Extension Test Suite', () => {
 				expected: "https://github.com/owner/repo/tree/HEAD/modules/name"
 			},
 			{
+				input: "git::ssh://git@gitlab.com/namespace/path/to/repo.git//modules/name",
+				expected: "https://gitlab.com/namespace/path/to/repo/tree/HEAD/modules/name"
+			},
+			{
+				input: "git::ssh://git@gitlab.com/namespace/path/to/repo.git//modules/name?ref=v0.0.1",
+				expected: "https://gitlab.com/namespace/path/to/repo/tree/v0.0.1/modules/name"
+			},
+			{
 				input: "git@github.com:owner/repo.git?ref=v0.0.1",
 				expected: "https://github.com/owner/repo/tree/v0.0.1/"
 			},

@@ -41,22 +41,23 @@ const getLocalPathUri: (moduleSource: string) => vscode.Uri | undefined = (modul
 // Generic Git Repository
 // https://developer.hashicorp.com/terraform/language/modules/sources#generic-git-repository
 const getGenericGitRepositoryUri: (moduleSource: string) => vscode.Uri | undefined = (moduleSource) => {
-  const { domain, owner, repo, module, ref } = parseGenericGitRepositoryModuleSource(moduleSource) || {};
-  if (!owner || !repo) { return; }
-  const uri = `https://${domain ? domain : 'github.com'}/${owner}/${repo}/tree/${ref ? ref : 'HEAD'}/${module}`;
+  const { domain, repoPath, module, ref } = parseGenericGitRepositoryModuleSource(moduleSource) || {};
+  if (!repoPath) { return; }
+  const uri = `https://${domain ? domain : 'github.com'}/${repoPath}/tree/${ref ? ref : 'HEAD'}/${module}`;
   return vscode.Uri.parse(uri);
 };
 
 const parseGenericGitRepositoryModuleSource: (resourceType: string) => {
-  domain: string, owner: string, repo: string, module: string, ref: string
+  domain: string, repoPath: string, module: string, ref: string
 } | undefined = (moduleSource) => {
-  const re = /^(git::|git::ssh:\/\/)?((.*@)?)(?<domain>[^:\/]+)(:|\/)(?<owner>[\w-]+)\/(?<repo>[\w-]+)(.git)?(\/\/(?<module>[\w-\/]+))?(\?ref=(?<ref>[\w.-]+))?$/;
+  const re = /^(?:git::(?:ssh:\/\/)?(([^@]+@)?))?(?:git::https?:\/\/)?(?:git@)?(?<domain>[^:\/]+)(?::|\/)?(?<repoPath>[^?#\.]+)(?:\.git)?(?:\/\/(?<module>[^?#]+))?(?:\?ref=(?<ref>[^#]+))?(?:#.*)?$/;
 
   const m = re.exec(moduleSource);
   if (!m) { return; };
 
-  const { domain = "", owner = "", repo = "", module = "", ref = "" } = m.groups || {};
-  return { domain, owner, repo, module, ref };
+  let { domain = "", repoPath = "", module = "", ref = "" } = m.groups || {};
+  repoPath = repoPath.replace(/\.git.*/, "");
+  return { domain, repoPath, module, ref };
 };
 
 // Terraform Registry
@@ -91,13 +92,13 @@ const getTerraformRegistryUri: (moduleSource: string) => vscode.Uri | undefined 
 export const getLineMatchResultUri: (lmr: LineMatchResult) => vscode.Uri | undefined =
   ({ moduleSource: s }) => {
     switch (true) {
+      case s.includes("http://") || s.includes("https://"):
+        // vscode already handles this
+        return;
       case s.startsWith("."):
         return getLocalPathUri(s);
       case s.startsWith("git::") || s.startsWith("github.com") || s.startsWith("git@github.com"):
         return getGenericGitRepositoryUri(s);
-      case s.startsWith("http://") || s.startsWith("https://"):
-        // vscode already handles this
-        return;
       case s.startsWith("gcs::") || s.startsWith("s3::") || s.startsWith("hg::"):
         // suffix is already a url
         return;
