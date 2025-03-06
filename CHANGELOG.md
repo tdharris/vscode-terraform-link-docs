@@ -1,3 +1,7 @@
+## [0.2.0](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.1.0...v0.2.0) (2025-03-05)
+
+- Add support for GitLab URLs
+
 ## [0.1.0](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.0.9...v0.1.0) (2024-08-16)
 
 - Add vscode extension output channel for debugging
