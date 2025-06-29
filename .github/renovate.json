@@ -48,6 +48,21 @@
     ],
     "packageRules": [
         {
+            "description": "Disable all devDependencies updates except for specific packages",
+            "matchDepTypes": [
+                "devDependencies"
+            ],
+            "matchPackagePatterns": [
+                "*"
+            ],
+            "excludePackageNames": [
+                "@vscode/vsce",
+                "@types/mocha",
+                "mocha"
+            ],
+            "enabled": false
+        },
+        {
             "description": "Group major updates together",
             "matchDepTypes": [
                 "devDependencies"
@@ -154,10 +169,6 @@
             "matchManagers": [
                 "github-actions"
             ],
-            "matchUpdateTypes": [
-                "minor",
-                "patch"
-            ],
             "automerge": true
         },
         {
@@ -170,15 +181,10 @@
                 "node"
             ],
             "matchPackagePatterns": [
-                "/node$"
+                "/node$",
+                "node"
             ],
-            "matchUpdateTypes": [
-                "major"
-            ],
-            "addLabels": [
-                "major"
-            ],
-            "groupName": "node major"
+            "enabled": false
         },
         {
             "matchDepNames": [
