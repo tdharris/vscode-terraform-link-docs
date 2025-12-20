@@ -9,7 +9,7 @@
     "url": "https://github.com/tdharris/vscode-terraform-link-docs.git"
   },
   "engines": {
-    "vscode": "^1.101.0"
+    "vscode": "^1.107.0"
   },
   "categories": [
     "Other"
@@ -60,16 +60,16 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.104.0",
+    "@types/vscode": "^1.107.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
-    "@typescript-eslint/eslint-plugin": "^8.42.1",
-    "@typescript-eslint/parser": "^8.42.1",
-    "eslint": "^9.34.0",
-    "typescript": "^5.9.2",
-    "@vscode/test-cli": "^0.0.11",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "@vscode/test-cli": "^0.0.12",
     "@vscode/test-electron": "^2.5.2",
-    "@vscode/vsce": "^3.6.2",
+    "@vscode/vsce": "^3.7.1",
     "mocha": "^11.7.5"
   }
 }
