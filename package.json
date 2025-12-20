@@ -2,7 +2,7 @@
   "name": "terraform-link-docs",
   "displayName": "Terraform Link Docs",
   "description": "Open documentation for Terraform resources, data sources, providers and modules",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "TylerHarris",
   "repository": {
     "type": "git",
@@ -32,6 +32,16 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Terraform Link Docs",
+      "properties": {
+        "terraform-link-docs.enableCommunityProviders": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enables more accurate link resolution for all providers (including community/3rd-party) by parsing 'required_providers' blocks. If disabled, only HashiCorp-supported providers will be linked correctly."
+        }
+      }
+    },
     "commands": [
       {
         "command": "terraform-link-docs.visitDocumentation",

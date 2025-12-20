@@ -1,10 +1,39 @@
 
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.0"
+    }
+  }
+}
+
 resource "aws_s3_bucket" "example" {
   bucket = "my-bucket"
 }
 
 data "aws_s3_bucket" "example" {
   bucket = aws_s3_bucket.example.bucket
+}
+
+resource "kubernetes_config_map" "example" {
+  metadata {
+    name = "my-config"
+  }
+
+  data = {
+    api_host             = "myhost:443"
+    db_host              = "dbhost:5432"
+    "my_config_file.yml" = "${file("${path.module}/my_config_file.yml")}"
+  }
+
+  binary_data = {
+    "my_payload.bin" = "${filebase64("${path.module}/my_payload.bin")}"
+  }
 }
 
 module "consul" {
@@ -19,8 +48,8 @@ module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 }
 
-module "iam_assumable_role" {
-  source = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
+module "iam_account" {
+  source = "terraform-aws-modules/iam/aws//modules/iam-account"
 }
 
 module "example_github" {
@@ -57,4 +86,8 @@ module "example_git_no_ref" {
 
 module "example_git_tag" {
   source = "git@github.com:owner/repo.git?ref=v0.0.1"
+}
+
+module "example_gitlab" {
+  source = "git::ssh://git@gitlab.com/namespace/path/to/repo.git//modules/name?ref=v0.0.1"
 }

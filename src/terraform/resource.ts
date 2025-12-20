@@ -40,9 +40,23 @@ const resourceTypeToProviderAndName: (resourceType: string) => { provider: strin
     return { provider, name };
   };
 
-export const getLineMatchResultUri: (lmr: LineMatchResult) => vscode.Uri | undefined =
-  ({ dataOrResource, resourceType }) => {
+export const getLineMatchResultUri: (lmr: LineMatchResult, providerMap?: Map<string, string>) => vscode.Uri | undefined =
+  ({ dataOrResource, resourceType }, providerMap) => {
     const { provider, name } = resourceTypeToProviderAndName(resourceType) || {};
     if (!provider || !name) { return; }
+
+    // Check if we have a known source for this provider alias
+    if (providerMap && providerMap.has(provider)) {
+      const source = providerMap.get(provider)!;
+      const [namespace, providerName] = source.split('/');
+      
+      // Map 'resource' -> 'resources', 'data' -> 'data-sources'
+      const typeSegment = dataOrResource === 'data' ? 'data-sources' : 'resources';
+      
+      // Construct Registry URL
+      // https://registry.terraform.io/providers/<namespace>/<provider>/latest/docs/<type>/<name>
+      return vscode.Uri.parse(`https://registry.terraform.io/providers/${namespace}/${providerName}/latest/docs/${typeSegment}/${name}`);
+    }
+
     return vscode.Uri.parse(`https://www.terraform.io/docs/providers/${provider}/${dataOrResource.charAt(0)}/${name}`);
   };

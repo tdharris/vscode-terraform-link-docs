@@ -1,10 +1,106 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
-// import * as tfresource from '../../terraform/resource';
+import * as tfresource from '../../terraform/resource';
 import * as tfmodule from '../../terraform/module';
 
 suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
+
+	test('resource:getLineMatchResultUri should return expected values', () => {
+		const providerMap = new Map<string, string>();
+		providerMap.set('digitalocean', 'digitalocean/digitalocean');
+		providerMap.set('custom', 'mycorp/custom');
+		providerMap.set('cloudflare', 'cloudflare/cloudflare');
+		providerMap.set('datadog', 'datadog/datadog');
+		providerMap.set('github', 'integrations/github');
+		providerMap.set('proxmox', 'bpg/proxmox');
+
+		const testCases = [
+			// Standard HashiCorp provider (not in map, fallback)
+			{
+				input: "aws_instance",
+				dataOrResource: "resource",
+				expected: "https://www.terraform.io/docs/providers/aws/r/instance"
+			},
+			// 3rd party provider in map
+			{
+				input: "digitalocean_droplet",
+				dataOrResource: "resource",
+				expected: "https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/droplet"
+			},
+			// 3rd party provider in map (data source)
+			{
+				input: "digitalocean_droplet",
+				dataOrResource: "data",
+				expected: "https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/droplet"
+			},
+			// Cloudflare
+			{
+				input: "cloudflare_dns_record",
+				dataOrResource: "resource",
+				expected: "https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record"
+			},
+			// Datadog
+			{
+				input: "datadog_monitor",
+				dataOrResource: "resource",
+				expected: "https://registry.terraform.io/providers/datadog/datadog/latest/docs/resources/monitor"
+			},
+			// GitHub (integrations namespace)
+			{
+				input: "github_repository",
+				dataOrResource: "resource",
+				expected: "https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository"
+			},
+			// Proxmox (bpg namespace)
+			{
+				input: "proxmox_virtual_environment_download_file",
+				dataOrResource: "resource",
+				expected: "https://registry.terraform.io/providers/bpg/proxmox/latest/docs/resources/virtual_environment_download_file"
+			},
+			// Unknown provider (fallback)
+			{
+				input: "unknown_resource",
+				dataOrResource: "resource",
+				expected: "https://www.terraform.io/docs/providers/unknown/r/resource"
+			}
+		];
+
+		testCases.forEach(testCase => {
+			const result = tfresource.getLineMatchResultUri({
+				type: "resource",
+				range: new vscode.Range(0, 0, 0, 0),
+				resourceType: testCase.input,
+				dataOrResource: testCase.dataOrResource as "data" | "resource"
+			}, providerMap);
+			assert.strictEqual(result?.toString(), testCase.expected, `Expected ${result?.toString()} to match ${testCase.expected} with input ${testCase.input}`);
+		});
+	});
+
+	test('resource:getLineMatchResultUri should fallback to default when providerMap is undefined', () => {
+		const testCases = [
+			{
+				input: "digitalocean_droplet",
+				dataOrResource: "resource",
+				expected: "https://www.terraform.io/docs/providers/digitalocean/r/droplet"
+			},
+			{
+				input: "cloudflare_dns_record",
+				dataOrResource: "resource",
+				expected: "https://www.terraform.io/docs/providers/cloudflare/r/dns_record"
+			}
+		];
+
+		testCases.forEach(testCase => {
+			const result = tfresource.getLineMatchResultUri({
+				type: "resource",
+				range: new vscode.Range(0, 0, 0, 0),
+				resourceType: testCase.input,
+				dataOrResource: testCase.dataOrResource as "data" | "resource"
+			}, undefined); // Pass undefined explicitly
+			assert.strictEqual(result?.toString(), testCase.expected, `Expected ${result?.toString()} to match ${testCase.expected} with input ${testCase.input}`);
+		});
+	});
 
 	test('module:getLineMatchResultUri should return expected values', () => {
 		const testCases = [

@@ -11,6 +11,8 @@ import {
   LineMatchResult as ResourceLineMatchResult
 } from './terraform/resource';
 
+import { getProviderMap } from './terraform/provider';
+
 const logPrefix = "[terraform-link-docs]";
 
 function isNotUndefined<T>(v: T | undefined): v is T {
@@ -18,7 +20,7 @@ function isNotUndefined<T>(v: T | undefined): v is T {
 }
 
 const linkProvider: vscode.DocumentLinkProvider = {
-  provideDocumentLinks(document: vscode.TextDocument, token: vscode.CancellationToken): vscode.ProviderResult<vscode.DocumentLink[]> {
+  async provideDocumentLinks(document: vscode.TextDocument, _token: vscode.CancellationToken): Promise<vscode.DocumentLink[]> {
     const res: Array<ModuleLineMatchResult | ResourceLineMatchResult> = [];
 
     for (let ln = 0; ln < document.lineCount; ln++) {
@@ -30,10 +32,21 @@ const linkProvider: vscode.DocumentLinkProvider = {
       }
     }
 
+    const config = vscode.workspace.getConfiguration('terraform-link-docs');
+    const enableCommunityProviders = config.get<boolean>('enableCommunityProviders', true);
+
+    let providerMap: Map<string, string> | undefined;
+    if (enableCommunityProviders) {
+      providerMap = await getProviderMap(document);
+      if (providerMap) {
+        outputChannel.appendLine(`${logPrefix} Provider Map: ${JSON.stringify(Array.from(providerMap.entries()))}`);
+      }
+    }
+
     return res.map((lmr: ResourceLineMatchResult | ModuleLineMatchResult) => {
       const uri = lmr.type === 'module' ?
         getModuleLineMatchResultUri(lmr) :
-        getResourceLineMatchResultUri(lmr);
+        getResourceLineMatchResultUri(lmr, providerMap);
       if (!uri) { return; }
 
       const link = uri.toString();
