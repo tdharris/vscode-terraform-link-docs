@@ -42,9 +42,10 @@
             "security"
         ]
     },
-    "automergeStrategy": "merge-commit",
+    "automergeStrategy": "squash",
     "ignorePaths": [
-        "**/node_modules/**"
+        "**/node_modules/**",
+        "**/examples/**"
     ],
     "packageRules": [
         {

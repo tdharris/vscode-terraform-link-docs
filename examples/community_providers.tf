@@ -2,7 +2,7 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "~> 5"
+      version = "~> 5.0"
     }
     digitalocean = {
       source  = "digitalocean/digitalocean"
@@ -14,11 +14,11 @@ terraform {
     }
     github = {
       source  = "integrations/github"
-      version = "~> 5.0"
+      version = "~> 6.0"
     }
     proxmox = {
       source  = "bpg/proxmox"
-      version = "~> 0.69.1"
+      version = "~> 0.90"
     }
   }
 }
