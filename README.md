@@ -10,13 +10,29 @@ This extension adds provider links to resources and data blocks as well as modul
 
 ### Provider Resources
 
-Below are generic examples of a resource and data block where appropriate links are added.
+Resources and data sources are automatically linked to their documentation.
 
 ```hcl
-resource "resource_type" "name" {}
+resource "aws_instance" "web" {}
 ```
 ```hcl
-data "data_type" "name" {}
+data "aws_ami" "example" {}
+```
+
+#### Community Providers
+
+The extension parses `required_providers` blocks to correctly link resources from community or partner [providers](https://registry.terraform.io/browse/providers) to the Terraform Registry (e.g. Cloudflare, etc.).
+
+```hcl
+terraform {
+  required_providers {
+    cloudflare = {
+      source = "cloudflare/cloudflare"
+    }
+  }
+}
+
+resource "cloudflare_record" "example" {}
 ```
 
 ### Modules
@@ -98,3 +114,9 @@ module "consul" {
   source = "bitbucket.org/hashicorp/terraform-consul-aws"
 }
 ```
+
+## Settings
+
+This extension contributes the following settings:
+
+* `terraform-link-docs.enableCommunityProviders`: Enable/disable parsing of `required_providers` to support community provider links. Default is `true`.

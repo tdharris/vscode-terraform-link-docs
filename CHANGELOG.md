@@ -1,3 +1,7 @@
+## [0.3.1](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.3.0...v0.3.1) (2026-01-10)
+
+- Update documentation to include details on Community Providers and configuration settings.
+
 ## [0.3.0](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.2.0...v0.3.0) (2025-12-20)
 
 - Add support for community/3rd-party providers by parsing `required_providers` blocks. Added `terraform-link-docs.enableCommunityProviders` setting to toggle this new provider resolution behavior (default: `true`).
