@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - name: Self-hosted Renovate
-        uses: renovatebot/github-action@f7fad228a053c69a98e24f8e4f6cf40db8f61e08 # v44.2.1
+        uses: renovatebot/github-action@d65ef9e20512193cc070238b49c3873a361cd50c # v46.1.1
         env:
           RENOVATE_REPOSITORIES: ${{ github.repository }}
           # Override schedule if set
