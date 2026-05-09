@@ -45,8 +45,8 @@ const linkProvider: vscode.DocumentLinkProvider = {
 
     return res.map((lmr: ResourceLineMatchResult | ModuleLineMatchResult) => {
       const uri = lmr.type === 'module' ?
-        getModuleLineMatchResultUri(lmr) :
-        getResourceLineMatchResultUri(lmr, providerMap);
+        getModuleLineMatchResultUri(lmr, config) :
+        getResourceLineMatchResultUri(lmr, providerMap, config);
       if (!uri) { return; }
 
       const link = uri.toString();

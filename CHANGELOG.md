@@ -1,3 +1,9 @@
+## [1.0.0](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.3.1...v1.0.0) (2026-05-09)
+
+- Add alternative registry support for OpenTofu (`search.opentofu.org`) and Library.tf (`library.tf`) and Custom (`custom`).
+- Add `terraform-link-docs.documentationRegistry` dropdown setting to quickly toggle registry routing.
+- Add custom URL templating logic via `custom` registry type for both providers and modules with fallback templates.
+
 ## [0.3.1](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.3.0...v0.3.1) (2026-01-10)
 
 - Update documentation to include details on Community Providers and configuration settings.

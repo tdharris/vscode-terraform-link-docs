@@ -120,3 +120,8 @@ module "consul" {
 This extension contributes the following settings:
 
 * `terraform-link-docs.enableCommunityProviders`: Enable/disable parsing of `required_providers` to support community provider links. Default is `true`.
+* `terraform-link-docs.documentationRegistry`: Select the documentation registry to use (`registry.terraform.io`, `search.opentofu.org`, `library.tf`, or `custom`). Default is `registry.terraform.io`.
+* `terraform-link-docs.customProviderDocURLTemplate`: (For `custom` registry) Template URL for provider documentation links.
+* `terraform-link-docs.customProviderDocURLFallbackTemplate`: (For `custom` registry) Fallback template URL for provider documentation links when the provider namespace is unknown.
+* `terraform-link-docs.customModuleDocURLTemplate`: (For `custom` registry) Template URL for public module documentation links.
+* `terraform-link-docs.customSubModuleDocURLTemplate`: (For `custom` registry) Template URL for public submodule documentation links.

@@ -2,7 +2,7 @@
   "name": "terraform-link-docs",
   "displayName": "Terraform Link Docs",
   "description": "Open documentation for Terraform resources, data sources, providers and modules",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "publisher": "TylerHarris",
   "repository": {
     "type": "git",
@@ -36,9 +36,46 @@
       "title": "Terraform Link Docs",
       "properties": {
         "terraform-link-docs.enableCommunityProviders": {
+          "order": 1,
           "type": "boolean",
           "default": true,
           "description": "Enables more accurate link resolution for all providers (including community/3rd-party) by parsing 'required_providers' blocks. If disabled, only HashiCorp-supported providers will be linked correctly."
+        },
+        "terraform-link-docs.documentationRegistry": {
+          "order": 2,
+          "type": "string",
+          "enum": [
+            "registry.terraform.io",
+            "search.opentofu.org",
+            "library.tf",
+            "custom"
+          ],
+          "default": "registry.terraform.io",
+          "description": "Select the documentation registry to use. If 'Custom' is selected, the custom template configurations below will be used."
+        },
+        "terraform-link-docs.customProviderDocURLTemplate": {
+          "order": 3,
+          "type": "string",
+          "default": "https://registry.terraform.io/providers/{namespace}/{providerName}/latest/docs/{typeSegment}/{name}",
+          "markdownDescription": "Only used if **Custom** Registry Type is selected above. Template URL for provider documentation links. Available placeholders: `{namespace}`, `{providerName}`, `{type}` (resource/data), `{typeSegment}` (resources/data-sources), `{typeSegmentShort}` (r/d), `{name}` (resource name without provider prefix), `{fullName}` (full resource name)."
+        },
+        "terraform-link-docs.customProviderDocURLFallbackTemplate": {
+          "order": 4,
+          "type": "string",
+          "default": "https://www.terraform.io/docs/providers/{provider}/{typeSegmentShort}/{name}",
+          "markdownDescription": "Only used if **Custom** Registry Type is selected above. Fallback template URL for provider documentation links when the provider namespace is unknown (e.g. `required_providers` not found). Available placeholders: `{provider}`, `{type}`, `{typeSegment}`, `{typeSegmentShort}`, `{name}`, `{fullName}`."
+        },
+        "terraform-link-docs.customModuleDocURLTemplate": {
+          "order": 5,
+          "type": "string",
+          "default": "https://registry.terraform.io/modules/{namespace}/{name}/{provider}",
+          "markdownDescription": "Only used if **Custom** Registry Type is selected above. Template URL for public module documentation links. Available placeholders: `{namespace}`, `{name}`, `{provider}`."
+        },
+        "terraform-link-docs.customSubModuleDocURLTemplate": {
+          "order": 6,
+          "type": "string",
+          "default": "https://registry.terraform.io/modules/{namespace}/{name}/{provider}/latest/submodules/{submodule}",
+          "markdownDescription": "Only used if **Custom** Registry Type is selected above. Template URL for public submodule documentation links. Available placeholders: `{namespace}`, `{name}`, `{provider}`, `{submodule}`."
         }
       }
     },

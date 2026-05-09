@@ -228,4 +228,165 @@ suite('Extension Test Suite', () => {
 			assert.strictEqual(result?.toString(), testCase.expected, `Expected ${result?.toString()} to match ${testCase.expected} with input ${testCase.input}`);
 		});
 	});
+
+	class MockConfig {
+		constructor(private values: Record<string, any>) {}
+		get<T>(section: string, defaultValue?: T): T {
+			return (this.values[section] !== undefined ? this.values[section] : defaultValue) as any as T;
+		}
+		has(section: string) { return section in this.values; }
+		inspect(section: string) { return undefined; }
+		update() { return Promise.resolve(); }
+	}
+
+	test('resource:getLineMatchResultUri should respect library.tf documentationRegistry', () => {
+		const providerMap = new Map<string, string>();
+		providerMap.set('digitalocean', 'digitalocean/digitalocean');
+
+		const config = new MockConfig({
+			'documentationRegistry': 'library.tf'
+		}) as any as vscode.WorkspaceConfiguration;
+
+		const result = tfresource.getLineMatchResultUri({
+			type: "resource",
+			range: new vscode.Range(0, 0, 0, 0),
+			resourceType: "digitalocean_droplet",
+			dataOrResource: "resource"
+		}, providerMap, config);
+
+		assert.strictEqual(result?.toString(), "https://library.tf/providers/digitalocean/digitalocean/latest/docs/resources/droplet");
+
+		const fallbackResult = tfresource.getLineMatchResultUri({
+			type: "resource",
+			range: new vscode.Range(0, 0, 0, 0),
+			resourceType: "unknown_resource",
+			dataOrResource: "resource"
+		}, undefined, config);
+
+		assert.strictEqual(fallbackResult?.toString(), "https://library.tf/providers/hashicorp/unknown/latest/docs/resources/resource");
+	});
+
+	test('module:getLineMatchResultUri should respect library.tf documentationRegistry', () => {
+		const config = new MockConfig({
+			'documentationRegistry': 'library.tf'
+		}) as any as vscode.WorkspaceConfiguration;
+
+		const result = tfmodule.getLineMatchResultUri({
+			type: "module",
+			range: new vscode.Range(0, 0, 0, 0),
+			moduleSource: "hashicorp/consul/aws",
+		}, config);
+
+		assert.strictEqual(result?.toString(), "https://library.tf/modules/hashicorp/consul/aws");
+
+		const submoduleResult = tfmodule.getLineMatchResultUri({
+			type: "module",
+			range: new vscode.Range(0, 0, 0, 0),
+			moduleSource: "terraform-aws-modules/iam/aws//modules/iam-assumable-role",
+		}, config);
+
+		assert.strictEqual(submoduleResult?.toString(), "https://library.tf/modules/terraform-aws-modules/iam/aws/latest/submodules/iam-assumable-role");
+	});
+
+	test('resource:getLineMatchResultUri should respect custom documentationRegistry templates', () => {
+		const providerMap = new Map<string, string>();
+		providerMap.set('google', 'hashicorp/google');
+
+		const config = new MockConfig({
+			'documentationRegistry': 'custom',
+			'customProviderDocURLTemplate': 'https://custom.corp.net/docs/{namespace}/{providerName}/{type}/{name}/{fullName}',
+			'customProviderDocURLFallbackTemplate': 'https://custom.corp.net/fallback/{provider}/{type}/{fullName}'
+		}) as any as vscode.WorkspaceConfiguration;
+
+		const result = tfresource.getLineMatchResultUri({
+			type: "resource",
+			range: new vscode.Range(0, 0, 0, 0),
+			resourceType: "google_compute_instance",
+			dataOrResource: "resource"
+		}, providerMap, config);
+
+		assert.strictEqual(result?.toString(), "https://custom.corp.net/docs/hashicorp/google/resource/compute_instance/google_compute_instance");
+
+		const fallbackResult = tfresource.getLineMatchResultUri({
+			type: "resource",
+			range: new vscode.Range(0, 0, 0, 0),
+			resourceType: "random_pet",
+			dataOrResource: "resource"
+		}, undefined, config);
+
+		assert.strictEqual(fallbackResult?.toString(), "https://custom.corp.net/fallback/random/resource/random_pet");
+	});
+
+	test('module:getLineMatchResultUri should respect custom documentationRegistry templates', () => {
+		const config = new MockConfig({
+			'documentationRegistry': 'custom',
+			'customModuleDocURLTemplate': 'https://internal.modules/{namespace}/{name}/{provider}',
+			'customSubModuleDocURLTemplate': 'https://internal.modules/{namespace}/{name}/{provider}/nested/{submodule}'
+		}) as any as vscode.WorkspaceConfiguration;
+
+		const result = tfmodule.getLineMatchResultUri({
+			type: "module",
+			range: new vscode.Range(0, 0, 0, 0),
+			moduleSource: "hashicorp/consul/aws",
+		}, config);
+
+		assert.strictEqual(result?.toString(), "https://internal.modules/hashicorp/consul/aws");
+
+		const submoduleResult = tfmodule.getLineMatchResultUri({
+			type: "module",
+			range: new vscode.Range(0, 0, 0, 0),
+			moduleSource: "terraform-aws-modules/iam/aws//modules/iam-assumable-role",
+		}, config);
+
+		assert.strictEqual(submoduleResult?.toString(), "https://internal.modules/terraform-aws-modules/iam/aws/nested/iam-assumable-role");
+	});
+
+	test('resource:getLineMatchResultUri should respect search.opentofu.org documentationRegistry', () => {
+		const providerMap = new Map<string, string>();
+		providerMap.set('aws', 'hashicorp/aws');
+
+		const config = new MockConfig({
+			'documentationRegistry': 'search.opentofu.org'
+		}) as any as vscode.WorkspaceConfiguration;
+
+		const result = tfresource.getLineMatchResultUri({
+			type: "resource",
+			range: new vscode.Range(0, 0, 0, 0),
+			resourceType: "aws_instance",
+			dataOrResource: "resource"
+		}, providerMap, config);
+
+		assert.strictEqual(result?.toString(), "https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/instance");
+
+		const fallbackResult = tfresource.getLineMatchResultUri({
+			type: "resource",
+			range: new vscode.Range(0, 0, 0, 0),
+			resourceType: "unknown_resource",
+			dataOrResource: "resource"
+		}, undefined, config);
+
+		assert.strictEqual(fallbackResult?.toString(), "https://search.opentofu.org/provider/hashicorp/unknown/latest/docs/resources/resource");
+	});
+
+	test('module:getLineMatchResultUri should respect search.opentofu.org documentationRegistry', () => {
+		const config = new MockConfig({
+			'documentationRegistry': 'search.opentofu.org'
+		}) as any as vscode.WorkspaceConfiguration;
+
+		const result = tfmodule.getLineMatchResultUri({
+			type: "module",
+			range: new vscode.Range(0, 0, 0, 0),
+			moduleSource: "terraform-aws-modules/vpc/aws",
+		}, config);
+
+		assert.strictEqual(result?.toString(), "https://search.opentofu.org/module/terraform-aws-modules/vpc/aws");
+
+		const submoduleResult = tfmodule.getLineMatchResultUri({
+			type: "module",
+			range: new vscode.Range(0, 0, 0, 0),
+			moduleSource: "terraform-aws-modules/iam/aws//modules/iam-assumable-role",
+		}, config);
+
+		assert.strictEqual(submoduleResult?.toString(), "https://search.opentofu.org/module/terraform-aws-modules/iam/aws/latest/submodules/iam-assumable-role");
+	});
 });
