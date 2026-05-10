@@ -2,7 +2,7 @@
   "name": "terraform-link-docs",
   "displayName": "Terraform Link Docs",
   "description": "Open documentation for Terraform resources, data sources, providers and modules",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "TylerHarris",
   "repository": {
     "type": "git",

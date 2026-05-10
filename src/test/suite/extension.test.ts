@@ -358,6 +358,15 @@ suite('Extension Test Suite', () => {
 
 		assert.strictEqual(result?.toString(), "https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/instance");
 
+		const dataResult = tfresource.getLineMatchResultUri({
+			type: "resource",
+			range: new vscode.Range(0, 0, 0, 0),
+			resourceType: "aws_s3_bucket",
+			dataOrResource: "data"
+		}, providerMap, config);
+
+		assert.strictEqual(dataResult?.toString(), "https://search.opentofu.org/provider/hashicorp/aws/latest/docs/datasources/s3_bucket");
+
 		const fallbackResult = tfresource.getLineMatchResultUri({
 			type: "resource",
 			range: new vscode.Range(0, 0, 0, 0),

@@ -1,3 +1,7 @@
+## [1.0.1](https://github.com/tdharris/vscode-terraform-link-docs/compare/v1.0.0...v1.0.1) (2026-05-09)
+
+- Fix OpenTofu (`search.opentofu.org`) documentation routing for `data` blocks to correctly use `datasources` URL segment without hyphens.
+
 ## [1.0.0](https://github.com/tdharris/vscode-terraform-link-docs/compare/v0.3.1...v1.0.0) (2026-05-09)
 
 - Add alternative registry support for OpenTofu (`search.opentofu.org`) and Library.tf (`library.tf`) and Custom (`custom`).

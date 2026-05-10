@@ -46,6 +46,7 @@ export const getLineMatchResultUri: (lmr: LineMatchResult, providerMap?: Map<str
     if (!provider || !name) { return; }
 
     const typeSegment = dataOrResource === 'data' ? 'data-sources' : 'resources';
+    const typeSegmentNoHyphen = dataOrResource === 'data' ? 'datasources' : 'resources';
     const typeSegmentShort = dataOrResource === 'data' ? 'd' : 'r';
 
     // Check if we have a known source for this provider alias
@@ -59,7 +60,7 @@ export const getLineMatchResultUri: (lmr: LineMatchResult, providerMap?: Map<str
       if (documentationRegistry === 'library.tf') {
         templateStr = "https://library.tf/providers/{namespace}/{providerName}/latest/docs/{typeSegment}/{name}";
       } else if (documentationRegistry === 'search.opentofu.org') {
-        templateStr = "https://search.opentofu.org/provider/{namespace}/{providerName}/latest/docs/{typeSegment}/{name}";
+        templateStr = "https://search.opentofu.org/provider/{namespace}/{providerName}/latest/docs/{typeSegmentNoHyphen}/{name}";
       } else if (documentationRegistry === 'custom') {
         templateStr = config?.get<string>('customProviderDocURLTemplate') || templateStr;
       }
@@ -70,6 +71,7 @@ export const getLineMatchResultUri: (lmr: LineMatchResult, providerMap?: Map<str
         .replace(/{providerName}/g, providerName)
         .replace(/{type}/g, dataOrResource)
         .replace(/{typeSegment}/g, typeSegment)
+        .replace(/{typeSegmentNoHyphen}/g, typeSegmentNoHyphen)
         .replace(/{typeSegmentShort}/g, typeSegmentShort)
         .replace(/{name}/g, name)
         .replace(/{fullName}/g, resourceType);
@@ -83,7 +85,7 @@ export const getLineMatchResultUri: (lmr: LineMatchResult, providerMap?: Map<str
     if (documentationRegistry === 'library.tf') {
       fallbackTemplateStr = "https://library.tf/providers/hashicorp/{providerName}/latest/docs/{typeSegment}/{name}";
     } else if (documentationRegistry === 'search.opentofu.org') {
-      fallbackTemplateStr = "https://search.opentofu.org/provider/hashicorp/{providerName}/latest/docs/{typeSegment}/{name}";
+      fallbackTemplateStr = "https://search.opentofu.org/provider/hashicorp/{providerName}/latest/docs/{typeSegmentNoHyphen}/{name}";
     } else if (documentationRegistry === 'custom') {
       fallbackTemplateStr = config?.get<string>('customProviderDocURLFallbackTemplate') || fallbackTemplateStr;
     }
@@ -93,6 +95,7 @@ export const getLineMatchResultUri: (lmr: LineMatchResult, providerMap?: Map<str
       .replace(/{providerName}/g, provider)
       .replace(/{type}/g, dataOrResource)
       .replace(/{typeSegment}/g, typeSegment)
+      .replace(/{typeSegmentNoHyphen}/g, typeSegmentNoHyphen)
       .replace(/{typeSegmentShort}/g, typeSegmentShort)
       .replace(/{name}/g, name)
       .replace(/{fullName}/g, resourceType);
