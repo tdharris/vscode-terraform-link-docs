@@ -1,12 +1,14 @@
 # Terraform Link Docs
 
-This extension adds provider links to resources and data blocks as well as module sources in your Terraform files.
+This extension adds provider links to resources, data blocks and module sources in your Terraform files, with support for multiple documentation registries including Terraform Registry, OpenTofu, Library.tf, and custom URL templates.
 
 ## Demo
 
 ![Demo](https://raw.githubusercontent.com/tdharris/vscode-terraform-link-docs/master/assets/demo.gif)
 
 ## Features
+
+- Multi-registry docs support: `registry.terraform.io`, `search.opentofu.org`, `library.tf`, or custom templates.
 
 ### Provider Resources
 
