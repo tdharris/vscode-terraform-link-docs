@@ -106,6 +106,6 @@
     "@vscode/test-cli": "^0.0.12",
     "@vscode/test-electron": "^2.5.2",
     "@vscode/vsce": "^3.7.1",
-    "mocha": "^11.7.5"
+    "mocha": "^11.7.6"
   }
 }
