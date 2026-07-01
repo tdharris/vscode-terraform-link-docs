@@ -53,9 +53,6 @@
             "matchDepTypes": [
                 "devDependencies"
             ],
-            "matchPackagePatterns": [
-                "*"
-            ],
             "excludePackageNames": [
                 "@vscode/vsce",
                 "@types/mocha",
@@ -67,9 +64,6 @@
             "description": "Group major updates together",
             "matchDepTypes": [
                 "devDependencies"
-            ],
-            "matchPackagePatterns": [
-                "*"
             ],
             "matchUpdateTypes": [
                 "major"
@@ -87,9 +81,6 @@
             "matchDepTypes": [
                 "devDependencies"
             ],
-            "matchPackagePatterns": [
-                "*"
-            ],
             "matchUpdateTypes": [
                 "minor"
             ],
@@ -103,9 +94,6 @@
             "description": "Group patch updates together and automerge if tests pass",
             "matchDepTypes": [
                 "devDependencies"
-            ],
-            "matchPackagePatterns": [
-                "*"
             ],
             "matchUpdateTypes": [
                 "patch"
@@ -121,9 +109,6 @@
             "description": "Group pin updates together and automerge if tests pass",
             "matchDepTypes": [
                 "devDependencies"
-            ],
-            "matchPackagePatterns": [
-                "*"
             ],
             "matchUpdateTypes": [
                 "pin",
